@@ -15,45 +15,45 @@ public class AddressControllerImpl implements AddressController {
 
     @Override
     public ResponseEntity<?> addAddress(AddressDTO addressDTO) {
-        ResultMessage resultMessage = addressService.addAddress(addressDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(resultMessage);
+        ResultMessage result = addressService.addAddress(addressDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @Override
     public ResponseEntity<?> getAddressList() {
-        ResultMessage resultMessage = addressService.getAddressList();
+        ResultMessage result = addressService.getAddressList();
         return ResponseEntity
-                .status(resultMessage.isSuccess()
+                .status(result.isSuccess()
                         ? HttpStatus.OK
                         : HttpStatus.NOT_FOUND)
-                .body(resultMessage);
+                .body(result.getObject());
     }
 
     @Override
     public ResponseEntity<?> getAddress(Long id) {
         ResultMessage result = addressService.getAddress(id);
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(result.getObject());
     }
 
     @Override
     public ResponseEntity<?> updateAddress(Long id, AddressDTO addressDTO) {
-        ResultMessage resultMessage = addressService.updateAddress(id, addressDTO);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(resultMessage);
+        ResultMessage result = addressService.updateAddress(id, addressDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
     }
 
     @Override
     public ResponseEntity<?> deleteAddress(Long id) {
-        ResultMessage resultMessage = addressService.deleteAddress(id);
-        return ResponseEntity.ok(resultMessage);
+        ResultMessage result = addressService.deleteAddress(id);
+        return ResponseEntity.ok(result);
     }
 
     @Override
     public ResponseEntity<?> getAddressByField(Double longitude, Double latitude) {
-        ResultMessage resultMessage = addressService.getAddressByField(longitude, latitude);
+        ResultMessage result = addressService.getAddressByField(longitude, latitude);
         return ResponseEntity
-                .status(resultMessage.isSuccess()
+                .status(result.isSuccess()
                         ? HttpStatus.OK
                         : HttpStatus.NOT_FOUND)
-                .body(resultMessage);
+                .body(result.getObject());
     }
 }

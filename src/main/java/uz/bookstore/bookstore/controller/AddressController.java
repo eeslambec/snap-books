@@ -9,16 +9,22 @@ import uz.bookstore.bookstore.dto.AddressDTO;
 public interface AddressController {
     @PostMapping
     ResponseEntity<?> addAddress(@RequestBody AddressDTO addressDTO);
+
     @GetMapping
     ResponseEntity<?> getAddressList();
+
     @GetMapping("/{id}")
     ResponseEntity<?> getAddress(@PathVariable Long id);
+
     @PutMapping("/{id}")
+    ResponseEntity<?> fullUpdateAddress(@PathVariable Long id,
+                                        @RequestBody AddressDTO addressDTO);
+
+    @PatchMapping("/{id}")
     ResponseEntity<?> updateAddress(@PathVariable Long id,
-                                 @RequestBody AddressDTO addressDTO);
+                                    @RequestBody AddressDTO addressDTO);
+
     @DeleteMapping("/{id}")
     ResponseEntity<?> deleteAddress(@PathVariable Long id);
-    @GetMapping
-    ResponseEntity<?> getAddressByField(@RequestParam("longitude")Double longitude,
-                                        @RequestParam("latitude")Double latitude);
+
 }

@@ -36,9 +36,19 @@ public class AddressControllerImpl implements AddressController {
     }
 
     @Override
+    public ResponseEntity<?> fullUpdateAddress(Long id, AddressDTO addressDTO) {
+        ResultMessage result = addressService.fullUpdateAddress(id, addressDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
+    }
+
+    @Override
     public ResponseEntity<?> updateAddress(Long id, AddressDTO addressDTO) {
         ResultMessage result = addressService.updateAddress(id, addressDTO);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
+        return ResponseEntity
+                .status(result.isSuccess()
+                        ? HttpStatus.ACCEPTED
+                        : HttpStatus.NOT_ACCEPTABLE)
+                .body(result.getObject());
     }
 
     @Override
@@ -47,13 +57,4 @@ public class AddressControllerImpl implements AddressController {
         return ResponseEntity.ok(result);
     }
 
-    @Override
-    public ResponseEntity<?> getAddressByField(Double longitude, Double latitude) {
-        ResultMessage result = addressService.getAddressByField(longitude, latitude);
-        return ResponseEntity
-                .status(result.isSuccess()
-                        ? HttpStatus.OK
-                        : HttpStatus.NOT_FOUND)
-                .body(result.getObject());
-    }
 }

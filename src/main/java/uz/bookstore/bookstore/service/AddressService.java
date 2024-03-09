@@ -10,9 +10,9 @@ public interface AddressService {
 
     ResultMessage getAddress(Long id);
 
-    ResultMessage updateAddress(Long id, AddressDTO addressDTO);
-
-    ResultMessage getAddressByField(Double longitude, Double latitude);
+    ResultMessage fullUpdateAddress(Long id, AddressDTO addressDTO);
 
     ResultMessage deleteAddress(Long id);
+
+    ResultMessage updateAddress(Long id, AddressDTO addressDTO);
 }

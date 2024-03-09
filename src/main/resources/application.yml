@@ -1,8 +1,8 @@
 spring:
   datasource:
-    username:
-    password:
-    url:
+    username: postgres
+    password: root123
+    url: jdbc:postgresql://localhost:5432/snap_books
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true

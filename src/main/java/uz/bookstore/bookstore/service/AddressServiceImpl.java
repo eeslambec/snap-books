@@ -18,7 +18,7 @@ public class AddressServiceImpl implements AddressService {
     public ResultMessage addAddress(AddressDTO addressDTO) {
         Address address = new Address();
         checkAndMapping(addressDTO, address);
-        return new ResultMessage(true, addressRepository.save(address));
+        return new ResultMessage(true, address);
     }
 
     @Override
@@ -34,19 +34,9 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public ResultMessage updateAddress(Long id, AddressDTO addressDTO) {
+    public ResultMessage fullUpdateAddress(Long id, AddressDTO addressDTO) {
         Address address = address(id);
         checkAndMapping(addressDTO, address);
-        return new ResultMessage(true, address);
-    }
-
-    @Override
-    public ResultMessage getAddressByField(Double longitude, Double latitude) {
-        if (longitude == null || latitude == null) {
-            return new ResultMessage(false, "the data is incorrect");
-        }
-        Address address = addressRepository.findByLongitudeAndLatitude(longitude, latitude)
-                .orElseThrow(() -> new RuntimeException("This address not found"));
         return new ResultMessage(true, address);
     }
 
@@ -55,6 +45,20 @@ public class AddressServiceImpl implements AddressService {
         Address address = address(id);
         addressRepository.delete(address);
         return new ResultMessage(true, address);
+    }
+
+    @Override
+    public ResultMessage updateAddress(Long id, AddressDTO addressDTO) {
+        Address address = address(id);
+        Double latitude = addressDTO.getLatitude();
+        Double longitude = addressDTO.getLongitude();
+        if (latitude==null && longitude==null){
+            return new ResultMessage(false,"Address has not been changed");
+        }
+        if (latitude!=null)address.setLatitude(latitude);
+        if (longitude!=null)address.setLongitude(longitude);
+        addressRepository.save(address);
+        return new ResultMessage(true,"Address changed");
     }
 
 
@@ -69,6 +73,7 @@ public class AddressServiceImpl implements AddressService {
         }
         address.setLongitude(longitude);
         address.setLatitude(latitude);
+        addressRepository.save(address);
     }
 
     private Address address(Long id) {

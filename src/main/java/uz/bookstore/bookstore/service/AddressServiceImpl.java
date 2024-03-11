@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import uz.bookstore.bookstore.dto.AddressDTO;
 import uz.bookstore.bookstore.dto.ResultMessage;
 import uz.bookstore.bookstore.entity.Address;
+import uz.bookstore.bookstore.exception.BadRequestException;
+import uz.bookstore.bookstore.exception.ConflictException;
+import uz.bookstore.bookstore.exception.NotFoundException;
 import uz.bookstore.bookstore.repository.AddressRepository;
 
 import java.util.List;
@@ -52,13 +55,13 @@ public class AddressServiceImpl implements AddressService {
         Address address = address(id);
         Double latitude = addressDTO.getLatitude();
         Double longitude = addressDTO.getLongitude();
-        if (latitude==null && longitude==null){
-            return new ResultMessage(false,"Address has not been changed");
+        if (latitude == null && longitude == null) {
+            return new ResultMessage(false, "Address has not been changed");
         }
-        if (latitude!=null)address.setLatitude(latitude);
-        if (longitude!=null)address.setLongitude(longitude);
+        if (latitude != null) address.setLatitude(latitude);
+        if (longitude != null) address.setLongitude(longitude);
         addressRepository.save(address);
-        return new ResultMessage(true,"Address changed");
+        return new ResultMessage(true, "Address changed");
     }
 
 
@@ -66,10 +69,9 @@ public class AddressServiceImpl implements AddressService {
         Double longitude = addressDTO.getLongitude();
         Double latitude = addressDTO.getLatitude();
         if (latitude == null || longitude == null)
-            throw new NullPointerException("address fields cannot be null");
+            throw new BadRequestException("address fields cannot be null");
         if (addressRepository.existsByLongitudeAndLatitude(longitude, latitude)) {
-            throw new RuntimeException("This address already exist");
-            //create new some exception
+            throw new ConflictException("This address already exist");
         }
         address.setLongitude(longitude);
         address.setLatitude(latitude);
@@ -78,8 +80,7 @@ public class AddressServiceImpl implements AddressService {
 
     private Address address(Long id) {
         return addressRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("this address not found"));
-        //create notfoundException
+                .orElseThrow(() -> new NotFoundException("this address not found"));
     }
 
 

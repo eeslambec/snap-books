@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import uz.bookstore.bookstore.dto.ResultMessage;
 import uz.bookstore.bookstore.entity.Book;
 import uz.bookstore.bookstore.entity.Cart;
+import uz.bookstore.bookstore.exception.NotFoundException;
 import uz.bookstore.bookstore.repository.CartRepository;
 import java.util.List;
 @Service
@@ -53,6 +54,6 @@ public class CartServiceImpl implements CartService{
     }
     private Cart cart(Long id) {
         return cartRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cart id not found"));
+                .orElseThrow(() -> new NotFoundException("Cart id not found"));
     }
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -29,8 +30,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String surname;
+    private String firstname;
+    private String lastname;
     private String phoneNumber;
     private String email;
     private String password;
@@ -43,4 +44,6 @@ public class User {
     private List<Book> boughtBooks;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Book> likedBooks;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> role;
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uz.bookstore.bookstore.exception.BadRequestException;
 import uz.bookstore.bookstore.exception.ConflictException;
-import uz.bookstore.bookstore.exception.ContentTypeException;
 import uz.bookstore.bookstore.exception.NotFoundException;
 
 import java.time.ZoneId;
@@ -49,16 +48,6 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(customException, notFound);
     }
 
-
-    @ExceptionHandler(value = {ContentTypeException.class})
-    public ResponseEntity<Object> handlerCustomException(ContentTypeException contentTypeException) {
-        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-        CustomException customException = new CustomException(
-                contentTypeException.getMessage(),
-                badRequest,
-                ZonedDateTime.now(ZoneId.of("Asia/Tashkent")));
-        return new ResponseEntity<>(customException, badRequest);
-    }
 
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<?> otherRunTimeErrors(Exception ignoredException) {

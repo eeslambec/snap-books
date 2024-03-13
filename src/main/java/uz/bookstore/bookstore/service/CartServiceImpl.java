@@ -2,58 +2,63 @@ package uz.bookstore.bookstore.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import uz.bookstore.bookstore.dto.ResultMessage;
+import uz.bookstore.bookstore.dto.CartDTO;
 import uz.bookstore.bookstore.entity.Book;
 import uz.bookstore.bookstore.entity.Cart;
 import uz.bookstore.bookstore.exception.NotFoundException;
 import uz.bookstore.bookstore.repository.CartRepository;
+
+import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class CartServiceImpl implements CartService{
+public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
+
     @Override
-    public ResultMessage addBookToCart(Long id, Book book) {
+    public CartDTO addBookToCart(Long id, Book book) {
         Cart cart = cart(id);
         cart.getBooks().add(book);
-        return new ResultMessage(true,cart);
-    }
-
-    @Override
-    public ResultMessage addCart(List<Book> books) {
-        Cart cart=new Cart();
-        cart.setBooks(books);
         cartRepository.save(cart);
-        return new ResultMessage(true,cart);
+        return getCartDTO(cart);
     }
 
     @Override
-    public ResultMessage getCart(Long id) {
-       return new ResultMessage(true, cart(id));
+    public CartDTO getCart(Long id) {
+        return getCartDTO(cart(id));
     }
 
     @Override
-    public ResultMessage getAllCart() {
+    public List<CartDTO> getAllCart() {
         List<Cart> all = cartRepository.findAll();
-        return new ResultMessage(true,all);
+        List<CartDTO> result = new ArrayList<>();
+        for (Cart cart : all) {
+            result.add(getCartDTO(cart));
+        }
+        return result;
     }
 
     @Override
-    public ResultMessage clearCart(Long id) {
+    public CartDTO clearCart(Long id) {
         Cart cart = cart(id);
-        if (cart.getBooks().isEmpty()){
-            return new ResultMessage(false,"This cart empty");
-        }else return new ResultMessage(true,"This cart cleared");
+        cart.setBooks(new ArrayList<>());
+        cartRepository.save(cart);
+        return getCartDTO(cart);
     }
 
     @Override
-    public ResultMessage deleteCart(Long id) {
+    public void deleteCart(Long id) {
         Cart cart = cart(id);
         cartRepository.delete(cart);
-        return new ResultMessage(true,cart);
     }
+
     private Cart cart(Long id) {
         return cartRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cart id not found"));
+                .orElseThrow(() -> new NotFoundException("There is no cart with this id " + id));
+    }
+
+    private CartDTO getCartDTO(Cart cart) {
+        return new CartDTO(cart.getId(), cart.getBooks());
     }
 }

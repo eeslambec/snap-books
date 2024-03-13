@@ -1,18 +1,20 @@
 package uz.bookstore.bookstore.service;
 
-import uz.bookstore.bookstore.dto.AddressDTO;
-import uz.bookstore.bookstore.dto.ResultMessage;
+import uz.bookstore.bookstore.dto.AddressInDTO;
+import uz.bookstore.bookstore.dto.AddressOutDTO;
+
+import java.util.List;
 
 public interface AddressService {
-    ResultMessage addAddress(AddressDTO addressDTO);
+    AddressOutDTO addAddress(AddressInDTO addressDTO);
 
-    ResultMessage getAddressList();
+    List<AddressOutDTO> getAddressList();
 
-    ResultMessage getAddress(Long id);
+    AddressOutDTO getAddress(Long id);
 
-    ResultMessage fullUpdateAddress(Long id, AddressDTO addressDTO);
+    AddressOutDTO fullUpdateAddress(Long id, AddressInDTO addressDTO);
 
-    ResultMessage deleteAddress(Long id);
+    void deleteAddress(Long id);
 
-    ResultMessage updateAddress(Long id, AddressDTO addressDTO);
+    AddressOutDTO updateAddress(Long id, AddressInDTO addressDTO);
 }

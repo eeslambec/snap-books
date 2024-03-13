@@ -7,8 +7,12 @@ import java.util.List;
 
 public interface CartService {
     CartDTO addBookToCart(Long id, Book book);
+
     CartDTO getCart(Long id);
+
     List<CartDTO> getAllCart();
-    CartDTO  clearCart(Long id);
-    void   deleteCart(Long id);
+
+    CartDTO clearCart(Long id);
+
+    void deleteCart(Long id);
 }

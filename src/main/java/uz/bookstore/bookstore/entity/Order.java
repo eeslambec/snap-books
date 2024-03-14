@@ -27,6 +27,6 @@ public class Order {
     private Long id;
     @OneToOne
     private Address deliveryAddress;
-    //todo total sum
+    private Double totalPrice;
 
 }

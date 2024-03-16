@@ -31,6 +31,19 @@ public class BookServiceImpl implements BookService {
     @SneakyThrows
     @Override
     public BookDto save(BookSaveDto bookSaveDto) {
+        if (Validations.isNullOrEmpty(bookSaveDto.getName()))
+            throw new NullOrEmptyException(bookSaveDto.getName());
+        if (Validations.isNullOrEmpty(bookSaveDto.getDescription()))
+            throw new NullOrEmptyException(bookSaveDto.getDescription());
+        if (bookSaveDto.getPrice() == null)
+            throw new NullOrEmptyException(bookSaveDto.getPrice().toString());
+        if (bookSaveDto.getPhoto() == null)
+            throw new NullOrEmptyException("Photo");
+        if (bookSaveDto.getReleaseDate() == null)
+            throw new NullOrEmptyException("Released date");
+        if (bookSaveDto.getGenres() == null) {
+            throw new NullOrEmptyException(bookSaveDto.getGenres().toString());
+        }
         List<Genre> genreList = new ArrayList<>();
         Files.write(UPLOAD_DIR, bookSaveDto.getPhoto().getInputStream().readAllBytes());
         for (String genre : bookSaveDto.getGenres()) {
@@ -76,7 +89,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookByAuthor(String name) {
-        if (name.isEmpty() || name.isBlank()) {
+        if (Validations.isNullOrEmpty(name)) {
             throw new NullOrEmptyException(name);
         }
         return new BookDto(bookRepository.findByAuthorName(name).orElseThrow(
@@ -91,7 +104,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getBookByName(String name) {
-        if (name.isEmpty() || name.isBlank()) {
+        if (Validations.isNullOrEmpty(name)) {
             throw new NullOrEmptyException(name);
         }
         return new BookDto(bookRepository.findByName(name).orElseThrow(

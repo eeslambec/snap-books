@@ -2,10 +2,7 @@ package uz.bookstore.bookstore.dto.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -16,24 +13,13 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class BookSaveDto {
 
-    @NotNull
-    @NotEmpty
     private String name;
     private String description;
-    @NotNull
-    @NotEmpty
     private Double price;
-
-    @NotNull
-    @NotEmpty
     private MultipartFile photo;
-
-    @NotNull
-    @NotEmpty
     private LocalDate releaseDate;
-
-    @NotNull
     private List<String> genres;
 }

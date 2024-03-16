@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class BookDto {
     Long id;

@@ -2,8 +2,6 @@ package uz.bookstore.bookstore.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import uz.bookstore.bookstore.entity.Book;
 
 import java.time.LocalDate;
@@ -40,17 +38,13 @@ public class BookDto {
     }
 
     @Getter
-    @Setter
     @AllArgsConstructor
-    @NoArgsConstructor
     public static class AuthorDto {
         String name;
     }
 
     @Getter
-    @Setter
     @AllArgsConstructor
-    @NoArgsConstructor
     public static class GenreDto {
         String value;
     }

@@ -35,14 +35,14 @@ public class BookServiceImpl implements BookService {
             throw new NullOrEmptyException(bookSaveDto.getName());
         if (Validations.isNullOrEmpty(bookSaveDto.getDescription()))
             throw new NullOrEmptyException(bookSaveDto.getDescription());
-        if (Validations.isNullOrEmpty(bookSaveDto.getPrice()))
-            throw new NullOrEmptyException(bookSaveDto.getPrice().toString());
-        if (Validations.isNullOrEmpty(bookSaveDto.getPhoto()))
+        if (bookSaveDto.getPrice() == null)
+            throw new NullOrEmptyException("Price");
+        if (bookSaveDto.getPhoto() == null)
             throw new NullOrEmptyException("Photo");
-        if (Validations.isNullOrEmpty(bookSaveDto.getReleaseDate()))
+        if (bookSaveDto.getReleaseDate() == null)
             throw new NullOrEmptyException("Released date");
-        if (Validations.isNullOrEmpty(bookSaveDto.getGenres())) {
-            throw new NullOrEmptyException(bookSaveDto.getGenres().toString());
+        if (bookSaveDto.getGenres() == null) {
+            throw new NullOrEmptyException("Genres");
         }
         List<Genre> genreList = new ArrayList<>();
         Files.write(UPLOAD_DIR, bookSaveDto.getPhoto().getInputStream().readAllBytes());

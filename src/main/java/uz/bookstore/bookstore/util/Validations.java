@@ -1,20 +1,12 @@
 package uz.bookstore.bookstore.util;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.util.ObjectUtils;
-
-import java.util.Objects;
 
 @UtilityClass
 public class Validations {
     public static boolean isNullOrEmpty(String str) {
         return str == null || str.trim().isEmpty();
     }
-
-    public static boolean isNullOrEmpty(Object obj) {
-        return obj == null || ObjectUtils.isEmpty(obj);
-    }
-
     /**
      * if this method send true then it is phoneNumber if not it is email
      * */

@@ -7,7 +7,6 @@ public class Validations {
     public static boolean isNullOrEmpty(String str) {
         return str == null || str.trim().isEmpty();
     }
-
     /**
      * if this method send true then it is phoneNumber if not it is email
      * */

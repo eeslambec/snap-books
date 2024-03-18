@@ -25,7 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Book {
+public class Book extends Auditing{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

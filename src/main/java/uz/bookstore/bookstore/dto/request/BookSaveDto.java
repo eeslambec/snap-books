@@ -15,6 +15,7 @@ public class BookSaveDto {
 
     private String name;
     private String description;
+    private String author;
     private Double price;
     private MultipartFile photo;
     private LocalDate releaseDate;

@@ -22,7 +22,7 @@ import java.util.List;
 @Setter
 @Builder
 @ToString
-public class Author {
+public class Author extends Auditing{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

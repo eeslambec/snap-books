@@ -19,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Address {
+public class Address extends Auditing{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

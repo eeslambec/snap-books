@@ -19,7 +19,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
-public class Order {
+public class Order extends Auditing{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

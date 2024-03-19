@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 import uz.bookstore.bookstore.dto.request.BookSaveDto;
 import uz.bookstore.bookstore.dto.request.BookUpdateDto;
 import uz.bookstore.bookstore.dto.response.BookDto;
+import uz.bookstore.bookstore.entity.Author;
 import uz.bookstore.bookstore.entity.Book;
 import uz.bookstore.bookstore.entity.Genre;
 import uz.bookstore.bookstore.exception.NotFoundException;
 import uz.bookstore.bookstore.exception.NullOrEmptyException;
+import uz.bookstore.bookstore.repository.AuthorRepository;
 import uz.bookstore.bookstore.repository.BookRepository;
 import uz.bookstore.bookstore.service.BookService;
 import uz.bookstore.bookstore.util.Validations;
@@ -24,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
-
+    private final AuthorRepository authorRepository;
     private static final String BASE_URL =  "src/main/resources/pictures";
     private static final Path UPLOAD_DIR = Path.of(System.getProperty("user.home") + File.separator);
 
@@ -32,9 +34,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto save(BookSaveDto bookSaveDto) {
         if (Validations.isNullOrEmpty(bookSaveDto.getName()))
-            throw new NullOrEmptyException(bookSaveDto.getName());
+            throw new NullOrEmptyException("Name");
         if (Validations.isNullOrEmpty(bookSaveDto.getDescription()))
-            throw new NullOrEmptyException(bookSaveDto.getDescription());
+            throw new NullOrEmptyException("Description");
+        if (Validations.isNullOrEmpty(bookSaveDto.getAuthor()))
+            throw new NullOrEmptyException("Author");
         if (bookSaveDto.getPrice() == null)
             throw new NullOrEmptyException("Price");
         if (bookSaveDto.getPhoto() == null)
@@ -51,9 +55,13 @@ public class BookServiceImpl implements BookService {
                     .value(genre)
                     .build());
         }
+        Author author = authorRepository.findByName(bookSaveDto.getAuthor()).orElseThrow(
+                () -> new NotFoundException("Author")
+        );
         Book book = Book.builder()
                 .name(bookSaveDto.getName())
                 .description(bookSaveDto.getDescription())
+                .author(author)
                 .price(bookSaveDto.getPrice())
                 .photoUrl(BASE_URL + bookSaveDto.getPhoto().getOriginalFilename())
                 .releaseDate(bookSaveDto.getReleaseDate())

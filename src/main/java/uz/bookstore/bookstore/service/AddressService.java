@@ -6,7 +6,7 @@ import uz.bookstore.bookstore.dto.AddressOutDTO;
 import java.util.List;
 
 public interface AddressService {
-    AddressOutDTO addAddress(AddressInDTO addressDTO);
+    AddressInDTO addAddress(AddressInDTO addressDTO);
 
     List<AddressOutDTO> getAddressList();
 

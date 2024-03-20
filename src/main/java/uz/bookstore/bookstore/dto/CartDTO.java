@@ -10,10 +10,8 @@ import uz.bookstore.bookstore.entity.Book;
 
 import java.util.List;
 
-@Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class CartDTO {
     private Long id;
     private List<Book> books;

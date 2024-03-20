@@ -20,11 +20,12 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
 
     @Override
-    public AddressOutDTO addAddress(AddressInDTO addressDTO) {
+    public AddressInDTO addAddress(AddressInDTO addressDTO) {
         Address address = new Address();
         checkAndMapping(addressDTO, address);
-        return getOutDTO(address);
+        return addressDTO;
     }
+
 
     @Override
     public List<AddressOutDTO> getAddressList() {
@@ -99,6 +100,8 @@ public class AddressServiceImpl implements AddressService {
                 longitude(address.getLongitude()).
                 build();
     }
+
+
 
 
 }

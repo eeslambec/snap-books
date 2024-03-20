@@ -13,13 +13,13 @@ import java.util.List;
 @RequestMapping("/api/v1/cart")
 @RestController
 @RequiredArgsConstructor
-public class CartControllerImpl {
+public class CartController {
     private final CartService cartService;
 
     @PostMapping("/{id}")
     public ResponseEntity<?> addBookToCart(@PathVariable Long id, @RequestBody Book book) {
         CartDTO result = cartService.addBookToCart(id, book);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")

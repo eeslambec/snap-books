@@ -1,11 +1,11 @@
 package uz.bookstore.bookstore.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class AddressOutDTO {
     private Long id;

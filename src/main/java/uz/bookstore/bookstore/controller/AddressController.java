@@ -18,7 +18,7 @@ public class AddressController {
 
     @PostMapping
     public ResponseEntity<?> addAddress(@RequestBody AddressInDTO addressDTO) {
-        AddressOutDTO result = addressService.addAddress(addressDTO);
+        AddressInDTO result = addressService.addAddress(addressDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
